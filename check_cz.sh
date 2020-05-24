@@ -16,7 +16,8 @@ if [ "$?" != "0" ] || [ "$THIS_CZ" == "" ] ; then
   echo ""
   echo "Continuing install WITHOUT OpenOCD fetch!"
   echo ""
-  export THIS_SKIP_CZ=true
+  exit 1
 else
   echo "Confirmed https://repo.or.cz/jimtcl.git/"
+  exit 0
 fi
