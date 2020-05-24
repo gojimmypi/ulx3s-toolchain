@@ -1,4 +1,12 @@
 #!/bin/bash
+
+if [ "$THIS_SKIP_CZ" == "true" ]; then
+  echo ""
+  echo "Skipping install_openocd-esp32 since it needs access to https://repo.or.cz; THIS_SKIP_CZ=$THIS_SKIP_CZ"
+  echo ""
+  exit 0
+fi
+
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
@@ -38,12 +46,12 @@ $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
 cd openocd
 
 # optional clean
-if [ "$THIS_CLEAN" == "true" ]; then  
-  echo ""                                                          2>&1 | tee -a "$THIS_LOG"
-  echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
-  make clean                                                       2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
+# if [ "$THIS_CLEAN" == "true" ]; then  
+#   echo ""                                                          2>&1 | tee -a "$THIS_LOG"
+#   echo "make clean"                                                2>&1 | tee -a "$THIS_LOG"
+#   make clean                                                       2>&1 | tee -a "$THIS_LOG"
+#   $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
+# fi
 
 echo "***************************************************************************************************"
 echo " openocd bootstrap. Saving log to $THIS_LOG"
