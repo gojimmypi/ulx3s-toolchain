@@ -2,6 +2,11 @@
 #"***************************************************************************************************"
 #  common initialization
 #"***************************************************************************************************"
+
+# select master or some GitHub hash version, and whether or not to force a clean
+THIS_CHECKOUT=master
+THIS_CLEAN=true
+
 # perform some version control checks on this file
 ./gitcheck.sh $0
 
@@ -11,8 +16,6 @@
 # we don't want tee to capture exit codes
 set -o pipefail
 
-# ensure we alwaye start from the $WORKSPACE directory
-cd "$WORKSPACE"
 #"***************************************************************************************************"
 # fetch the ULX3S examples into the workspace
 #"***************************************************************************************************"
@@ -21,17 +24,19 @@ THIS_LOG=$LOG_DIRECTORY"/"$THIS_FILE_NAME"_ulx3s-bin_"$LOG_SUFFIX".log"
 echo "***************************************************************************************************"
 echo " ulx3s-examples. Saving log to $THIS_LOG"
 echo "***************************************************************************************************"
-if [ ! -d "$WORKSPACE"/ulx3s-examples ]; then
-  git clone --recursive https://github.com/ulx3s/ulx3s-examples.git    2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-  cd ulx3s-examples
-else
-  cd ulx3s-examples
-  git fetch                                                            2>&1 | tee -a "$THIS_LOG"
-  git pull                                                             2>&1 | tee -a "$THIS_LOG"
-  $SAVED_CURRENT_PATH/check_for_error.sh $? "$THIS_LOG"
-fi
 
-cd $SAVED_CURRENT_PATH
+# Call the common github checkout:
 
+pushd .
+cd "$WORKSPACE"
+
+$SAVED_CURRENT_PATH/fetch_github.sh https://github.com/ulx3s/ulx3s-examples.git ulx3s-examples $THIS_CHECKOUT  2>&1 | tee -a "$THIS_LOG"
+$SAVED_CURRENT_PATH/check_for_error.sh                                                                           $?          "$THIS_LOG"
+
+cd "$WORKSPACE"/ulx3s-examples
+
+# TODO - any checks?
+
+popd
 echo "Completed $0 "                                                  | tee -a "$THIS_LOG"
+echo "----------------------------------"

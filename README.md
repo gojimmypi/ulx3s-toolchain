@@ -46,6 +46,10 @@ ULX3S_COM=/dev/ttyS8
 # for ESP32 IDF
 cd ~/esp/esp-idf/
 . ./export.sh
+
+# the apt-get is now optional (needed for individual Ubuntu and WSL install files other than "all")
+# the default it to not use apt-get, so we need to turn it on
+export APTGET=1
 ```
 
 For WSL:
@@ -57,6 +61,10 @@ ULX3S_COM=/dev/ttyS8
 # for ESP32 IDF
 cd ~/esp/esp-idf/
 . ./export.sh
+
+# the apt-get is now optional (needed for individual Ubuntu and WSL install files other than "all")
+# the default it to not use apt-get, so we need to turn it on
+export APTGET=1
 ```
 
 Reminder: ~~WSL numbers are [n-1] (e.g. ttyS8 is COM9)~~ (edit: this appears to no longer be the case?)
@@ -81,9 +89,9 @@ Keep this in mind if your firewall or [dns blocker](https://pi-hole.net/) blocks
 
 ```
 cd ~
-wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
-./install.sh barebones
+./install.sh barebones aptget
 ```
 
 
@@ -93,9 +101,9 @@ Install everything:
 
 ```
 cd ~
-wget https://raw.githubusercontent.com/gojimmypi/ulx3s-toolchain/master/install.sh
+wget https://raw.githubusercontent.com/ulx3s/ulx3s-toolchain/master/install.sh
 chmod +x install.sh
-./install.sh
+./install.sh aptget
 ```
 or
 
@@ -103,10 +111,10 @@ or
 sudo apt-get install git --assume-yes
 mkdir -p ~/workspace
 cd ~/workspace
-git clone https://github.com/gojimmypi/ulx3s-toolchain.git
+git clone https://github.com/ulx3s/ulx3s-toolchain.git
 cd ulx3s-toolchain
-chmod +x ./install_all.sh
-./install_all.sh
+chmod +x ./install.sh
+./install.sh aptget
 ```
 
 ## ULX3S Binaries
